@@ -1,8 +1,7 @@
-import { ObjectId } from "bson";
 import mongoose, { Schema, model } from "mongoose";
 
 const postSchema = new Schema({
-  title: { String, required: true },
+  title: { type: String, required: true },
   content: String,
   author: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],

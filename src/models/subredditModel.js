@@ -1,7 +1,7 @@
 import mongoose, { Schema, model } from "mongoose";
 
 const subredditSchema = new Schema({
-  title: { String, required: true },
+  title: { type: String, required: true },
   description: String,
   posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
 });
