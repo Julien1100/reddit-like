@@ -3,6 +3,7 @@ import volleyball from "volleyball";
 import "dotenv/config";
 import mongoose from "mongoose";
 import cors from "cors";
+import authRouter from "./routes/userRoute";
 
 const app = express();
 const port = process.env.PORT;
@@ -17,9 +18,14 @@ async function main() {
   console.log("[📡 DATABASE] - Connected");
 }
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
 app.get("/", (req, res) => {
   res.send("reddit-like-back");
 });
+
+app.use("/", authRouter);
 
 app.listen(port, () => {
   console.log(`Reddit-Like Back running: http://localhost:${port}`);
