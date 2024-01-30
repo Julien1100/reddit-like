@@ -19,6 +19,11 @@ userSchema.methods.encrypt = async (password) => {
   return hash;
 };
 
+userSchema.methods.passwordVerification = async (password, hashedPassword) => {
+  const result = await bcrypt.compare(password, hashedPassword);
+  return result;
+};
+
 const User = model("User", userSchema);
 
 export default User;
