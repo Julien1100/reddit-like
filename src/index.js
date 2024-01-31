@@ -3,7 +3,10 @@ import volleyball from "volleyball";
 import "dotenv/config";
 import mongoose from "mongoose";
 import cors from "cors";
+
 import authRouter from "./routes/userRoute";
+import subredditRouter from "./routes/subredditRoute";
+subredditRouter;
 
 const app = express();
 const port = process.env.PORT;
@@ -26,6 +29,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/", authRouter);
+app.use("/", subredditRouter);
 
 app.listen(port, () => {
   console.log(`Reddit-Like Back running: http://localhost:${port}`);
