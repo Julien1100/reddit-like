@@ -16,9 +16,7 @@ const createComment = async (req, res) => {
     // Add newComment._id to related post collection
     const post = await Post.findByIdAndUpdate(
       postId,
-      {
-        $push: { comments: newComment._id },
-      },
+      { $push: { comments: newComment._id } },
       { new: true }
     );
 
