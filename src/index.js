@@ -7,6 +7,7 @@ import cors from "cors";
 import authRouter from "./routes/userRoute";
 import subredditRouter from "./routes/subredditRoute";
 import postRouter from "./routes/postRoute";
+import commentRouter from "./routes/commentRoute";
 
 const app = express();
 const port = process.env.PORT;
@@ -27,6 +28,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/", authRouter);
 app.use("/", subredditRouter);
 app.use("/", postRouter);
+app.use("/r/", commentRouter);
 
 app.get("/", (req, res) => {
   res.send("reddit-like-back");
