@@ -1,4 +1,5 @@
 import Subreddit from "../models/subredditModel";
+import Post from "../models/postModel";
 
 const createSubreddit = async (req, res) => {
   try {
@@ -25,4 +26,31 @@ const getAllSubreddits = async (req, res) => {
   }
 };
 
-export { createSubreddit, getAllSubreddits };
+const getOneSubreddit = async (req, res) => {
+  const subredditId = req.params.subredditId;
+
+  try {
+    const subreddit = await Subreddit.findById(subredditId);
+
+    if (subreddit) {
+      const postsId = subreddit.posts;
+
+      const posts = await Post.find({ _id: { $in: postsId } }, "title content");
+
+      res.send(
+        `${subreddit.title} | ${
+          subreddit.description
+        }\nPosts dans ce subreddit:\n${posts
+          .map((post) => `${post.title} - ${post.content}`)
+          .join("\n")}`
+      );
+    } else {
+      res.status(404).send("Subreddit introuvable");
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Erreur lors de la requête");
+  }
+};
+
+export { createSubreddit, getAllSubreddits, getOneSubreddit };
