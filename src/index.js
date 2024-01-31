@@ -6,7 +6,7 @@ import cors from "cors";
 
 import authRouter from "./routes/userRoute";
 import subredditRouter from "./routes/subredditRoute";
-subredditRouter;
+import postRouter from "./routes/postRoute";
 
 const app = express();
 const port = process.env.PORT;
@@ -24,12 +24,13 @@ async function main() {
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+app.use("/", authRouter);
+app.use("/", subredditRouter);
+app.use("/", postRouter);
+
 app.get("/", (req, res) => {
   res.send("reddit-like-back");
 });
-
-app.use("/", authRouter);
-app.use("/", subredditRouter);
 
 app.listen(port, () => {
   console.log(`Reddit-Like Back running: http://localhost:${port}`);
