@@ -25,8 +25,9 @@ const createPostInSubreddit = async (req, res) => {
     const newPost = await new Post();
     newPost.title = req.body.title;
     newPost.content = req.body.content;
-    newPost.author = req.body.author;
+    newPost.author = req.user._id;
     newPost.subreddit = subredditId;
+
     await newPost.save();
 
     //Add newPost._id to related subreddit collection
