@@ -1,3 +1,4 @@
+import { generateAuthToken } from "../middlewares/auth";
 import User from "../models/userModel";
 
 const register = async (req, res) => {
@@ -25,6 +26,9 @@ const login = async (req, res) => {
       const error = new Error("Mot de passe invalide");
       throw error;
     }
+    const token = generateAuthToken(user);
+    console.log(`Token: ${token}`);
+
     res.send("Vous êtes connecté 🥳");
   } catch (error) {
     console.log(error);
