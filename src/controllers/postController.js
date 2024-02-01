@@ -14,7 +14,7 @@ const createPost = async (req, res) => {
     res.status(201).send(`Le post est créé 🆕\n${newPost}`);
   } catch (error) {
     res.send(error.message);
-    // res.status(500).send("Erreur lors de la création du post");
+    res.status(500).send("Erreur lors de la création du post");
   }
 };
 

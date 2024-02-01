@@ -15,7 +15,7 @@ const auth = (req, res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     // Store decrypted user's datas to req
-    req.user = decoded.user;
+    req.user = decoded.userData;
     next();
   } catch (error) {
     res.status(401).send("Token invalide");
@@ -24,7 +24,7 @@ const auth = (req, res, next) => {
 
 const generateAuthToken = (user) => {
   const userData = {
-    id: user._id,
+    id: user.id,
     email: user.email,
   };
   const token = jwt.sign({ userData }, process.env.JWT_SECRET, {
