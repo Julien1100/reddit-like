@@ -27,9 +27,8 @@ const login = async (req, res) => {
       throw error;
     }
     const token = generateAuthToken(user);
-    console.log(`Token: ${token}`);
 
-    res.send("Vous êtes connecté 🥳");
+    res.send(`Vous êtes connecté 🥳\n${token}`);
   } catch (error) {
     console.log(error);
     res.status(500).send("Erreur lors de la connexion");

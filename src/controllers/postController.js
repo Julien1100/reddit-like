@@ -3,15 +3,18 @@ import Subreddit from "../models/subredditModel";
 
 const createPost = async (req, res) => {
   try {
-    const newPost = await new Post();
-    newPost.title = req.body.title;
-    newPost.content = req.body.content;
-    newPost.author = req.body.author;
+    const { title, content } = req.body;
+    const newPost = await new Post({
+      title,
+      content,
+      author: req.user._id,
+    });
+
     await newPost.save();
     res.status(201).send(`Le post est créé 🆕\n${newPost}`);
   } catch (error) {
-    console.log(error);
-    res.status(500).send("Erreur lors de a création du post");
+    res.send(error.message);
+    // res.status(500).send("Erreur lors de la création du post");
   }
 };
 

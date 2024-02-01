@@ -4,29 +4,32 @@ import "dotenv/config";
 const auth = (req, res, next) => {
   // Get the token in the header authorization
   const tokenHeader = req.headers.authorization;
-  const token = tokenHeader.split(" ")[1];
 
   // Verify if token exist
-  if (!token) {
-    return res.status(401).send("Accès non authorisé");
+  if (!tokenHeader) {
+    return res.status(401).send("Accès non autorisé");
   }
+  const token = tokenHeader.split(" ")[1];
 
   // Verify token validity
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     // Store decrypted user's datas to req
-    req.user = {
-      id: decoded.id,
-      email: decoded.email,
-    };
+    req.user = decoded.user;
     next();
   } catch (error) {
     res.status(401).send("Token invalide");
   }
 };
 
-const generateAuthToken = ({ user }) => {
-  const token = jwt.sign({ user }, process.env.JWT_SECRET, { expiresIn: "7d" });
+const generateAuthToken = (user) => {
+  const userData = {
+    id: user._id,
+    email: user.email,
+  };
+  const token = jwt.sign({ userData }, process.env.JWT_SECRET, {
+    expiresIn: "7d",
+  });
   return token;
 };
 
