@@ -28,6 +28,9 @@ const createComment = async (req, res) => {
   }
 };
 
+/* FIXME:
+  Fix Send of status 500
+*/
 const updateComment = async (req, res) => {
   try {
     const commentId = req.params.commentId;
@@ -50,4 +53,21 @@ const updateComment = async (req, res) => {
   }
 };
 
-export { createComment, updateComment };
+const deleteComment = async (req, res) => {
+  try {
+    const commentId = req.params.commentId;
+    const comment = await Comment.findById(commentId);
+
+    if (comment) {
+      await Comment.deleteOne(comment);
+      res.status(200).send(`Commentaire supprimé avec succès`);
+    } else {
+      res.status(404).send("Commentaire introuvable");
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Erreur lors de la suppression du commentaire");
+  }
+};
+
+export { createComment, updateComment, deleteComment };
