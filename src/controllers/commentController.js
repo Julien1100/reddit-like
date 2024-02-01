@@ -28,17 +28,14 @@ const createComment = async (req, res) => {
   }
 };
 
-/* FIXME:
-  Fix Send of status 500
-*/
 const updateComment = async (req, res) => {
   try {
     const commentId = req.params.commentId;
+    const comment = await Comment.findById(commentId);
 
-    if (commentId) {
-      const comment = await Comment.findById(commentId);
+    if (comment) {
       comment.content = req.body.content;
-      comment.save();
+      await comment.save();
       res
         .status(202)
         .send(
@@ -49,7 +46,7 @@ const updateComment = async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    res.status(500).send("Erreur lors de l'ajout du commentaire");
+    res.status(500).send("Erreur lors de la modification du commentaire");
   }
 };
 
