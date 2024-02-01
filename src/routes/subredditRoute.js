@@ -4,10 +4,11 @@ import {
   getAllSubreddits,
   getOneSubreddit,
 } from "../controllers/subredditController";
+import { auth } from "../middlewares/auth";
 
 const subredditRouter = Router();
 
-subredditRouter.post("/new-subreddit", createSubreddit);
+subredditRouter.post("/new-subreddit", auth, createSubreddit);
 subredditRouter.get("/r/", getAllSubreddits);
 subredditRouter.get("/r/:subredditId", getOneSubreddit);
 
