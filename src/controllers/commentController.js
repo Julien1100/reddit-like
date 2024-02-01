@@ -28,4 +28,26 @@ const createComment = async (req, res) => {
   }
 };
 
-export { createComment };
+const updateComment = async (req, res) => {
+  try {
+    const commentId = req.params.commentId;
+
+    if (commentId) {
+      const comment = await Comment.findById(commentId);
+      comment.content = req.body.content;
+      comment.save();
+      res
+        .status(202)
+        .send(
+          `Commentaire modifié avec succès\nMise à jour : \"${comment.content}\"`
+        );
+    } else {
+      res.status(404).send("Commentaire introuvable");
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Erreur lors de l'ajout du commentaire");
+  }
+};
+
+export { createComment, updateComment };
